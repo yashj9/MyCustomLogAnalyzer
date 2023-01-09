@@ -6,6 +6,9 @@ import copy
 import sys
 import argparse
 
+sys.path.append(os.path.join(sys.path[0],'log_messenger'))
+from pyScriptLogger import logMessage
+
 """
 print(len(sys.argv))
 
@@ -56,8 +59,8 @@ def get_scaapplog_details():
     tempdict = {}
     for root, dirs, files in os.walk(".\\temp" +'\\'):
         for file in files:
-            print(f"{file}")
-            print(f"{root} + {file}")
+            # print(f"{file}")
+            # print(f"{root} + {file}")
             if file.strip().startswith('scaapp') and file.strip().endswith('.log'):
                 with open(os.path.join(root, file)) as logfile:
                     """
@@ -92,6 +95,10 @@ def get_debuglog_details():
 
 
 def main():
+
+    # Create custome logger object.
+    loggerObject = logMessage(__name__)
+
     # Create a parser object
     parser = argparse.ArgumentParser()
 
@@ -108,7 +115,9 @@ def main():
     input_file = args.input_file
     optional_flag = args.optional
 
-    print(f"optional flag value is {optional_flag}")
+    # print(f"optional flag value is {optional_flag}")
+
+    loggerObject.logger.info(f"optional flag value is {optional_flag}")
 
     print(f"the input file name is: {input_file}")
 
